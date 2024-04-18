@@ -1,4 +1,3 @@
-//Integrantes: Gabriel Mazzieri e Lorenzzo Rodrigues.
 package calculadora_imc;
 import calculo_imc.PrincipalCalculo;
 import visualizar_imc.PrincipalVisualizacaoImc;
@@ -10,19 +9,19 @@ public class PrincipalCalculadora_IMC {
         String user_num;
         float imc_principal = 0;
        
-        //Nome do usuário principal
+        //Nome do usuÃ¡rio principal
         System.out.print("Digite seu nome: ");
         String nome_user = sc.next();
        
       while (true) {
-        System.out.printf("\n----------- Olá %s! ------------------", nome_user);
+        System.out.printf("\n----------- OlÃ¡ %s! ------------------", nome_user);
         System.out.println("\nDigite 1 para calcular. ");
         System.out.println("Digite 2 para calcular mais de um IMC. ");
-        System.out.printf("Digite 3 para ver o último IMC de %s.\n", nome_user);
+        System.out.printf("Digite 3 para ver o Ãºltimo IMC de %s.\n", nome_user);
         System.out.println("Digite 4 para Sair.");
         System.out.print("-------------------------------------------");
 
-        System.out.print("\nDigite um dos números acima: ");
+        System.out.print("\nDigite um dos nÃºmeros acima: ");
         user_num = sc.next();        
         
             //Calcular IMC
@@ -31,16 +30,16 @@ public class PrincipalCalculadora_IMC {
  
             //Calcular mais de um IMC
         } else if (user_num.equals("2")) {
-            System.out.print("Digite o número de pessoas: ");
+            System.out.print("Digite o nÃºmero de pessoas: ");
             int numPessoas = sc.nextInt();
             for (int i = 0; i < numPessoas; i++) {
                 System.out.print("Digite seu nome: ");
                 String outro_user = sc.next();
                 Float outro_imc = PrincipalCalculo.calculo();
-                System.out.printf("IMC de %s é: %.1f\n", outro_user, outro_imc);
+                System.out.printf("IMC de %s Ã©: %.1f\n", outro_user, outro_imc);
                 }
             
-            //Ver ultimo IMC Calculado do usuário principal
+            //Ver ultimo IMC Calculado do usuÃ¡rio principal
         } else if (user_num.equals("3"))  {
             PrincipalVisualizacaoImc.ver_imc(imc_principal);    
         
@@ -54,9 +53,9 @@ public class PrincipalCalculadora_IMC {
                     System.out.println("Saindo...");
                     System.exit(0);
                 }
-            //Número Inválido
+            //NÃºmero InvÃ¡lido
             } else{ 
-                System.out.println("\nTente um número válido.");
+                System.out.println("\nTente um nÃºmero vÃ¡lido.");
             }
         }
     }
