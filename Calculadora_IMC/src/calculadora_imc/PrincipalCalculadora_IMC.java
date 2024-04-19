@@ -1,3 +1,4 @@
+//Integrantes: Gabriel Mazzieri e Lorenzzo Rodrigues
 package calculadora_imc;
 import calculo_imc.PrincipalCalculo;
 import visualizar_imc.PrincipalVisualizacaoImc;
