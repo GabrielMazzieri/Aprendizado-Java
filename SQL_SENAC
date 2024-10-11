@@ -1,0 +1,215 @@
+CREATE DATABASE relojoaria;
+USE relojoaria;
+
+CREATE TABLE cliente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    data_nascimento DATE NOT NULL,
+    id_endereco INT,
+    id_telefone INT,
+    id_email INT,
+    FOREIGN KEY (id_endereco) REFERENCES endereco(id),
+    FOREIGN KEY (id_telefone) REFERENCES telefone(id),
+    FOREIGN KEY (id_email) REFERENCES email(id)
+);
+
+CREATE TABLE fornecedor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    razao_social VARCHAR(100) NOT NULL,
+    nome_fantasia VARCHAR(100) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL UNIQUE,
+    id_endereco INT,
+    id_telefone INT,
+    id_email INT,
+    FOREIGN KEY (id_endereco) REFERENCES endereco(id),
+    FOREIGN KEY (id_telefone) REFERENCES telefone(id),
+    FOREIGN KEY (id_email) REFERENCES email(id)
+);
+
+CREATE TABLE email (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE telefone (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    telefone VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE endereco (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rua VARCHAR(100) NOT NULL,
+    numero VARCHAR(10) NOT NULL,
+    bairro VARCHAR(50) NOT NULL,
+    cidade VARCHAR(50) NOT NULL,
+    uf VARCHAR(2) NOT NULL,
+    cep VARCHAR(8) NOT NULL
+);
+
+CREATE TABLE estoque (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    quantidade_disponivel INT NOT NULL
+);
+
+CREATE TABLE produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    modelo VARCHAR(50),
+    marca VARCHAR(50),
+    tipo_de_lente VARCHAR(50),
+    cor_da_armacao VARCHAR(50),
+    material_da_armacao VARCHAR(50),
+    valor DECIMAL(10, 2) NOT NULL,
+    id_estoque INT,
+    id_fornecedor INT,
+    FOREIGN KEY (id_estoque) REFERENCES estoque(id),
+    FOREIGN KEY (id_fornecedor) REFERENCES fornecedor(id)
+);
+
+CREATE TABLE venda (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data_venda DATE NOT NULL,
+    id_cliente INT,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+);
+
+CREATE TABLE itens_venda (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_venda INT,
+    id_produto INT,
+    quantidade INT NOT NULL,
+    valor_unitario DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_venda) REFERENCES venda(id),
+    FOREIGN KEY (id_produto) REFERENCES produto(id)
+);
+
+-- Inserindo dados nas tabelas
+
+-- Endereços
+INSERT INTO endereco (rua, numero, bairro, cidade, uf, cep) VALUES
+('Avenida Brasil', '101', 'Centro', 'São Paulo', 'SP', '01590-004'),
+('Rua das Flores', '202', 'Jardim Primavera', 'Rio de Janeiro', 'RJ', '35668-050'),
+('Travessa do Comércio', '303', 'Centro Histórico', 'Belo Horizonte', 'MG', '59431-521'),
+('Rua do Sol', '404', 'Vila Nova', 'Porto Alegre', 'RS', '90000-000'),
+('Avenida das Américas', '505', 'Barra da Tijuca', 'Curitiba', 'PR', '56321-510'),
+('Rua das Acácias', '606', 'Jardim Botânico', 'Salvador', 'BA', '25974-052'),
+('Estrada do Mar', '707', 'Praia do Futuro', 'Fortaleza', 'CE', '52013-952'),
+('Rua da Liberdade', '808', 'Liberdade', 'Brasília', 'DF', '53210-055'),
+('Avenida das Palmeiras', '909', 'Vila Nova', 'Florianópolis', 'SC', '25413-220'),
+('Rua da Esperança', '1010', 'Alto da Glória', 'Vitória', 'ES', '36510-796');
+
+-- Telefone
+INSERT INTO telefone (telefone) VALUES
+('11987654321'),
+('21987654322'),
+('31987654323'),
+('41987654324'),
+('51987654325'),
+('61987654326'),
+('71987654327'),
+('81987654328'),
+('91987654329'),
+('11987654330');
+
+-- Email
+INSERT INTO email (email) VALUES
+('jose.silva@gmail.com'),
+('maria.oliveira@hotmail.com'),
+('pedro.santos@outlook.com'),
+('ana.pereira@gmail.com'),
+('luan.rodrigues@hotmail.com'),
+('carla.martins@outlook.com'),
+('bruno.carvalho@gmail.com'),
+('vanessa.souza@hotmail.com'),
+('roberto.lima@outlook.com'),
+('fernanda.brites@gmail.com');
+
+-- Fornecedor
+INSERT INTO fornecedor (razao_social, nome_fantasia, cnpj, id_endereco, id_telefone, id_email) VALUES
+('Folheni SA', 'Folheni', '84.292.459/0001-04', 1, 1, 1),
+('Vlock LTDA', 'Vlock', '25.541.410/0001-70', 2, 2, 2),
+('Ferbought SA', 'Ferbought', '20.735.629/0001-97', 3, 3, 3),
+('Mouth LTDA', 'Mouth', '12.297.899/0001-35', 4, 4, 4),
+('BetClock SA', 'BetClock', '80.370.395/0001-53', 5, 5, 5);
+
+-- Cliente
+INSERT INTO cliente (nome, cpf, data_nascimento, id_endereco, id_telefone, id_email) VALUES
+('Enrico', '22293494063', '2000-11-30', 1, 1, 1),
+('Felipe', '22133573070', '1992-02-22', 2, 2, 2),
+('Carla', '03257461097', '1980-04-13', 3, 3, 3),
+('Gabriel', '97412455052', '1995-03-26', 4, 4, 4),
+('Raissa', '15365808053', '2005-01-05', 5, 5, 5),
+('Guilherme', '95136301023', '2001-06-16', 6, 6, 6),
+('Vanessa', '82982206099', '1998-05-07', 7, 7, 7),
+('Fernanda', '12518565000', '1977-08-28', 8, 8, 8),
+('Ricardo', '79662504079', '1989-12-09', 9, 9, 9),
+('Julia', '24429475016', '1950-10-19', 10, 10, 10);
+
+-- Estoque
+INSERT INTO estoque (quantidade_disponivel) VALUES 
+(50), (30), (20), (10), (5), (15), (25), (40), (35), (60), 
+(45), (55), (65), (70), (75), (80), (85), (90), (95), (100), (110);
+
+-- Produto
+INSERT INTO produto (nome, modelo, marca, tipo_de_lente, cor_da_armacao, material_da_armacao, valor, id_estoque, id_fornecedor) VALUES
+('Relógio Omega Seamaster', 'Seamaster 300', 'Omega', 'Cristal Safira', 'Azul', 'Aço Inoxidável', 3500.00, 1, 1),
+('Relógio Rolex Submariner', 'Submariner 116610', 'Rolex', 'Cristal Safira', 'Preto', 'Aço Inoxidável', 25000.00, 2, 2),
+('Relógio Casio G-Shock', 'G-7900', 'Casio', 'Cristal Mineral', 'Verde', 'Resina', 150.00, 3, 3),
+('Relógio Fossil Gen 5', 'FTW4027', 'Fossil', 'Cristal Mineral', 'Dourado', 'Aço Inoxidável', 300.00, 4, 4),
+('Relógio Michael Kors', 'MK8496', 'Michael Kors', 'Cristal Mineral', 'Rose Gold', 'Aço Inoxidável', 350.00, 5, 5),
+('Relógio Seiko 5', 'SNK793', 'Seiko', 'Cristal Hardlex', 'Preto', 'Aço Inoxidável', 200.00, 6, 1),
+('Relógio Tag Heuer Carrera', 'CV2010.BA0786', 'Tag Heuer', 'Cristal Safira', 'Prata', 'Aço Inoxidável', 3000.00, 7, 2),
+('Relógio Citizen Eco-Drive', 'BM8180-03E', 'Citizen', 'Cristal Mineral', 'Preto', 'Aço Inoxidável', 150.00, 8, 3),
+('Relógio Timex Expedition', 'T49963', 'Timex', 'Cristal Mineral', 'Verde Militar', 'Resina', 70.00, 9, 4),
+('Relógio Bulova Precisionist', '96B251', 'Bulova', 'Cristal Safira', 'Dourado', 'Aço Inoxidável', 600.00, 10, 5);
+
+-- Vendas
+INSERT INTO venda (data_venda, id_cliente, total) VALUES
+('2024-01-01', 1, 300.00),
+('2024-01-02', 2, 150.00),
+('2024-01-03', 3, 200.00),
+('2024-01-04', 4, 120.00),
+('2024-01-05', 5, 180.00),
+('2024-01-06', 6, 250.00),
+('2024-01-07', 7, 220.00),
+('2024-01-08', 8, 170.00),
+('2024-01-09', 9, 140.00),
+('2024-01-10', 10, 110.00);
+
+-- Itens da venda
+INSERT INTO itens_venda (id_venda, id_produto, quantidade, valor_unitario) VALUES
+(1, 1, 1, 150.00),
+(2, 2, 1, 200.00),
+(3, 3, 1, 300.00),
+(4, 4, 1, 80.00),
+(5, 5, 1, 120.00),
+(6, 6, 1, 220.00),
+(7, 7, 1, 180.00),
+(8, 8, 1, 90.00),
+(9, 9, 1, 140.00),
+(10, 10, 1, 160.00);
+
+
+-- ARRUMAR ESSA PARTE EM RELAÇÃO AS TABELAS DE CIMA
+-- Atualizações de endereços
+UPDATE endereco SET rua = 'Nova Rua 1', numero = '201' WHERE id = 1;
+UPDATE endereco SET rua = 'Nova Rua 2', numero = '202' WHERE id = 2;
+UPDATE endereco SET rua = 'Nova Rua 3', numero = '203' WHERE id = 3;
+
+-- Atualizações em fornecedores
+INSERT INTO fornecedor (razao_social, nome_fantasia, cnpj) VALUES
+('Fornecedor F', 'Fantasia F', '12345678000105'),
+('Fornecedor G', 'Fantasia G', '12345678000106');
+
+UPDATE fornecedor SET nome_fantasia = 'Novo Fantasia A' WHERE id = 1;
+
+-- Deletar produtos
+DELETE FROM produto WHERE id IN (1, 2);
+
+-- Atualizações de preços
+UPDATE produto SET valor = 110.00 WHERE id = 3;
+UPDATE produto SET valor = 120.00 WHERE id = 4;
+UPDATE produto SET valor = 130.00 WHERE id = 5;
+UPDATE produto SET valor = 140.00 WHERE id = 6;
